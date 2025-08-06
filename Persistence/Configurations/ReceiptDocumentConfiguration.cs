@@ -4,21 +4,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations;
 
-public class UnitOfMeasurementConfiguration : BaseEntityTypeConfiguration<UnitOfMeasurement>
+public class ReceiptDocumentConfiguration : BaseEntityTypeConfiguration<ReceiptDocument>
 {
-    public override void Configure(EntityTypeBuilder<UnitOfMeasurement> builder)
+    public override void Configure(EntityTypeBuilder<ReceiptDocument> builder)
     {
         base.Configure(builder);
-        
-        builder.Property(u => u.Name)
+
+        builder.HasIndex(rd => rd.Number).IsUnique();
+
+        builder.Property(rd => rd.Number)
             .IsRequired()
-            .HasMaxLength(200);
-        
-        builder.Property(u => u.Status)
-            .HasDefaultValue(true);
-        
-        builder.HasMany(u => u.ReceiptResources)
-            .WithOne(rr => rr.UnitOfMeasurement)
-            .HasForeignKey(rr => rr.UnitOfMeasurementId);
+            .HasMaxLength(50);
+
+        builder.Property(rd => rd.Date)
+            .IsRequired();
+
+        builder.HasMany(rd => rd.ReceiptResources)
+            .WithOne(rr => rr.ReceiptDocument)
+            .HasForeignKey(rr => rr.ReceiptDocumentId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

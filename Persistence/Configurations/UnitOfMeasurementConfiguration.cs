@@ -4,22 +4,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations;
 
-public class ResourceConfiguration : BaseEntityTypeConfiguration<Resource>
+public class UnitOfMeasurementConfiguration : BaseEntityTypeConfiguration<UnitOfMeasurement>
 {
-    public override void Configure(EntityTypeBuilder<Resource> builder)
+    public override void Configure(EntityTypeBuilder<UnitOfMeasurement> builder)
     {
         base.Configure(builder);
-        builder.HasIndex(r => r.Name).IsUnique();
-
-        builder.Property(r => r.Name)
+        
+        builder.HasIndex(u => u.Name).IsUnique();
+        
+        builder.Property(u => u.Name)
             .IsRequired()
             .HasMaxLength(200);
         
-        builder.Property(r => r.Status)
+        builder.Property(u => u.Status)
             .HasDefaultValue(true);
         
-        builder.HasMany(r => r.ReceiptResources)
-            .WithOne(rr => rr.Resource)
-            .HasForeignKey(rr => rr.ResourceId);
+        builder.HasMany(u => u.ReceiptResources)
+            .WithOne(rr => rr.UnitOfMeasurement)
+            .HasForeignKey(rr => rr.UnitOfMeasurementId);
     }
 }

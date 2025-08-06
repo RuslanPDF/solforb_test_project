@@ -1,0 +1,8 @@
+﻿namespace Persistence.Repositories.Common;
+
+public static class RepositoryConstants
+{
+    public const string NOT_FOUND_RESOURCE_BY_ID = "Not found resource ";
+    public const string ERROR_CREATING_RECORD = "Error creating record.";
+    public const string NAME_EXISTS = "Name already exists.";
+}

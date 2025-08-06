@@ -1,6 +1,9 @@
 ﻿namespace Domain.Entities;
 
-public class UnitOfMeasurement
+public class UnitOfMeasurement : Entity
 {
+    public string Name { get; set; } = string.Empty;
+    public bool Status { get; set; }
     
+    public ICollection<ReceiptResource> ReceiptResources { get; set; }
 }
