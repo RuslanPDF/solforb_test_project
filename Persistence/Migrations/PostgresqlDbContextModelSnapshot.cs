@@ -52,7 +52,7 @@ namespace Persistence.Migrations
                     b.HasIndex("Number")
                         .IsUnique();
 
-                    b.ToTable("ReceiptDocument");
+                    b.ToTable("ReceiptDocument", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ReceiptResource", b =>
@@ -92,7 +92,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ReceiptDocumentId", "ResourceId", "UnitOfMeasurementId");
 
-                    b.ToTable("ReceiptResource");
+                    b.ToTable("ReceiptResource", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Resource", b =>
@@ -127,7 +127,7 @@ namespace Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Resource");
+                    b.ToTable("Resource", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.UnitOfMeasurement", b =>
@@ -162,7 +162,7 @@ namespace Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("UnitOfMeasurement");
+                    b.ToTable("UnitOfMeasurement", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ReceiptResource", b =>
