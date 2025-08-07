@@ -7,6 +7,6 @@ public class UpdateResourceByIdValidator : AbstractValidator<UpdateResourceByIdC
     public UpdateResourceByIdValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
-        RuleFor(x => x.Status).NotEmpty();
+        RuleFor(x => x.Status);
     }
 }

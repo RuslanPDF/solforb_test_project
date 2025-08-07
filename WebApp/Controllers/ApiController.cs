@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Application.Common.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.DTOs;
@@ -42,13 +43,13 @@ public class ApiController : ControllerBase
         var subClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
         if (subClaim == null)
         {
-            throw new Exception("Not valid JWT: name identifier not provide");
+            throw new BadRequestException("Not valid JWT: name identifier not provide");
         }
         
         var result = int.TryParse(subClaim.Value, out var id);
         if (!result)
         {
-            throw new Exception("Not valid JWT: incorrect name identifier format");
+            throw new BadRequestException("Not valid JWT: incorrect name identifier format");
         }
     
         return id;

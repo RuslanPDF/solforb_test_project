@@ -1,4 +1,5 @@
-﻿using Application.Units.Commands.CreateNewUnit;
+﻿using Application.Common.DTOs.Request.Units;
+using Application.Units.Commands.CreateNewUnit;
 using Application.Units.Commands.DeleteUnitById;
 using Application.Units.Commands.UpdateUnitById;
 using Application.Units.Queries.GetUnitAll;
@@ -24,8 +25,8 @@ public class UnitController : ApiController
         return FormatResponse(result);
     }
 
-    [HttpGet(":id")]
-    public async Task<ApiResponse<UnitOfMeasurement>> GetUnitById([FromQuery] int id)
+    [HttpGet("{id}")]
+    public async Task<ApiResponse<UnitOfMeasurement>> GetUnitById([FromRoute] int id)
     {
         var query = new GetUnitByIdQry
         {
@@ -35,8 +36,8 @@ public class UnitController : ApiController
         return FormatResponse(result);
     }
 
-    [HttpDelete(":id")]
-    public async Task DeleteUnitById([FromQuery] int id)
+    [HttpDelete("{id}")]
+    public async Task DeleteUnitById([FromRoute] int id)
     {
         var cmd = new DeleteUnitByIdCmd
         {
@@ -45,8 +46,8 @@ public class UnitController : ApiController
         await Mediator.Send(cmd);
     }
 
-    [HttpPut(":id")]
-    public async Task UpdateUnitById([FromQuery] int id, [FromBody] UnitOfMeasurement unit)
+    [HttpPut("{id}")]
+    public async Task UpdateUnitById([FromRoute] int id, [FromBody] UpdateUnitByIdRequest unit)
     {
         var cmd = new UpdateUnitByIdCmd
         {
@@ -58,7 +59,7 @@ public class UnitController : ApiController
     }
 
     [HttpPost]
-    public async Task CreateNewUnit([FromBody] UnitOfMeasurement unit)
+    public async Task CreateNewUnit([FromBody] CreateNewUnitRequest unit)
     {
         var cmd = new CreateNewUnitCmd
         {

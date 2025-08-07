@@ -1,4 +1,5 @@
-﻿using Application.Common.Persistence;
+﻿using Application.Common.Exceptions;
+using Application.Common.Persistence;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Repositories.Common;
@@ -17,7 +18,7 @@ public class ResourceRepository(DbContext ctx) : BaseRepository<Resource>(ctx), 
         var resource = await Entities.FirstOrDefaultAsync(x => x.Id == id);
         if (resource == null)
         {
-            throw new Exception(RepositoryConstants.NOT_FOUND_RESOURCE_BY_ID + id);
+            throw new BadRequestException(RepositoryConstants.NOT_FOUND_RESOURCE_BY_ID + id);
         }
 
         return resource;
@@ -33,7 +34,7 @@ public class ResourceRepository(DbContext ctx) : BaseRepository<Resource>(ctx), 
         }
         catch
         {
-            throw new Exception(RepositoryConstants.ERROR_CREATING_RECORD);
+            throw new BadRequestException(RepositoryConstants.ERROR_CREATING_RECORD);
         }
     }
 
@@ -42,7 +43,7 @@ public class ResourceRepository(DbContext ctx) : BaseRepository<Resource>(ctx), 
         var resource = await Entities.FirstOrDefaultAsync(x => x.Name == name);
         if (resource != null)
         {
-            throw new Exception(RepositoryConstants.NAME_EXISTS);
+            throw new BadRequestException(RepositoryConstants.NAME_EXISTS);
         }
     }
 }

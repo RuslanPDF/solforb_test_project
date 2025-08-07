@@ -1,7 +1,9 @@
-﻿using Application.Resources.Commands.CreateNewResource;
+﻿using Application.Common.DTOs.Request.Resources;
+using Application.Resources.Commands.CreateNewResource;
 using Application.Resources.Commands.DeleteResourceById;
 using Application.Resources.Commands.UpdateResourceById;
 using Application.Resources.Queries.GetResourceAll;
+using Application.Resources.Queries.GetResourceById;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,16 +25,16 @@ public class ResourceController : ApiController
         return FormatResponse(results);
     }
 
-    [HttpGet(":id")]
-    public async Task<ApiResponse<List<Resource>>> GetResourceById([FromQuery] int id)
+    [HttpGet("{id}")]
+    public async Task<ApiResponse<Resource>> GetResourceById([FromRoute] int id)
     {
-        var query = new GetResourceAllQry();
+        var query = new GetResourceByIdQry { Id = id };
         var results = await Mediator.Send(query);
         return FormatResponse(results);
     }
 
-    [HttpDelete(":id")]
-    public async Task DeleteResourceById([FromQuery] int id)
+    [HttpDelete("{id}")]
+    public async Task DeleteResourceById([FromRoute] int id)
     {
         var cmd = new DeleteResourceByIdCmd
         {
@@ -42,8 +44,8 @@ public class ResourceController : ApiController
         await Mediator.Send(cmd);
     }
 
-    [HttpPut(":id")]
-    public async Task UpdateResourceById([FromQuery] int id, [FromBody] UpdateResourceByIdCmd body)
+    [HttpPut("{id}")]
+    public async Task UpdateResourceById([FromRoute] int id, [FromBody] UpdateResourceByIdRequest body)
     {
         var cmd = new UpdateResourceByIdCmd
         {
@@ -56,12 +58,12 @@ public class ResourceController : ApiController
     }
 
     [HttpPost]
-    public async Task CreateNewResource([FromBody] CreateNewResourceCmd body)
+    public async Task CreateNewResource([FromBody] CreateNewResourceRequest body)
     {
         var cmd = new CreateNewResourceCmd
         {
             Name = body.Name,
-            Status = body.Status,
+            Status = body.Status
         };
 
         await Mediator.Send(cmd);

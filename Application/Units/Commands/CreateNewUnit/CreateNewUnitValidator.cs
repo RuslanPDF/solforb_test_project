@@ -7,6 +7,6 @@ public class CreateNewUnitValidator : AbstractValidator<CreateNewUnitCmd>
     public CreateNewUnitValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
-        RuleFor(x => x.Status).NotEmpty();
+        RuleFor(x => x.Status);
     }
 }
