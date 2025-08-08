@@ -1,9 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Common.DTOs.Response;
+using Application.Common.DTOs.Response.Receipt;
 using MediatR;
 
 namespace Application.Receipts.Queries.GetReceiptAll;
 
-public record GetReceiptAllQry : IRequest<List<ReceiptDocument>>
+public record GetReceiptAllQry : IRequest<List<ReceiptDocumentResponse>>
 {
     public DateTime? DateFrom { get; set; }
     public DateTime? DateTo { get; set; }

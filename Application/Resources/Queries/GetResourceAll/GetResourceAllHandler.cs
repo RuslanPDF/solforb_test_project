@@ -1,17 +1,17 @@
-﻿using Application.Common.Persistence;
+﻿using Application.Common.DTOs.Response.Resource;
+using Application.Common.Persistence;
 using AutoMapper;
 using MediatR;
-using Domain.Entities;
 
 namespace Application.Resources.Queries.GetResourceAll;
 
-public class GetResourceAll(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<GetResourceAllQry, List<Resource>>
+public class GetResourceAll(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<GetResourceAllQry, List<ResourceResponse>>
 {
     private readonly IResourceRepository _resourceRepository = _unitOfWork.GetRepository<IResourceRepository>();
 
-    public async Task<List<Resource>> Handle(GetResourceAllQry request, CancellationToken cancellationToken)
+    public async Task<List<ResourceResponse>> Handle(GetResourceAllQry request, CancellationToken cancellationToken)
     {
-        var resources = await _resourceRepository.GetAllAsync();
-        return resources;
+        var resources = await _resourceRepository.GetAllAsync(request.Status);
+        return _mapper.Map<List<ResourceResponse>>(resources);
     }
 }

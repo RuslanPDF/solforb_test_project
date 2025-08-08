@@ -1,16 +1,17 @@
 ﻿using Application.Common.DTOs.Filter;
+using Application.Common.DTOs.Response;
+using Application.Common.DTOs.Response.Receipt;
 using Application.Common.Persistence;
 using AutoMapper;
-using Domain.Entities;
 using MediatR;
 
 namespace Application.Receipts.Queries.GetReceiptAll;
 
-public class GetReceiptAllHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<GetReceiptAllQry, List<ReceiptDocument>>
+public class GetReceiptAllHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<GetReceiptAllQry, List<ReceiptDocumentResponse>>
 {
     private readonly IReceiptRepository _receiptRepository = _unitOfWork.GetRepository<IReceiptRepository>();
 
-    public async Task<List<ReceiptDocument>> Handle(GetReceiptAllQry request, CancellationToken cancellationToken)
+    public async Task<List<ReceiptDocumentResponse>> Handle(GetReceiptAllQry request, CancellationToken cancellationToken)
     {
         var filter = new ReceiptFilter
         {
@@ -21,6 +22,6 @@ public class GetReceiptAllHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IR
             UnitIds = request.UnitIds
         };
         var receipt = await _receiptRepository.GetAllAsync(filter);
-        return receipt;
+        return _mapper.Map<List<ReceiptDocumentResponse>>(receipt);
     }
 }

@@ -8,9 +8,28 @@ namespace Persistence.Repositories;
 
 public class ResourceRepository(DbContext ctx) : BaseRepository<Resource>(ctx), IResourceRepository
 {
-    public async Task<List<Resource>> GetAllAsync()
+    public async Task<List<Resource>> GetAllAsync(string status)
     {
-        return await Entities.ToListAsync();
+        var query = Entities.AsQueryable();
+
+        switch (status)
+        {
+            case "all":
+            {
+                return await Entities
+                    .ToListAsync();
+            }
+            case "true":
+            case "false":
+            {
+                var parseStatus = bool.Parse(status);
+                return await Entities
+                    .Where(x => x.Status == parseStatus)
+                    .ToListAsync();
+            }
+        }
+        
+        throw new BadRequestException("Server error");
     }
 
     public async Task<Resource> GetByIdAsync(int id)

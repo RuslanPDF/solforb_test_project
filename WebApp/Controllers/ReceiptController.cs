@@ -1,4 +1,6 @@
 ﻿using Application.Common.DTOs.Request.Receipts;
+using Application.Common.DTOs.Response;
+using Application.Common.DTOs.Response.Receipt;
 using Application.Receipts.Commands.CreateNewReceipt;
 using Application.Receipts.Commands.DeleteReceiptById;
 using Application.Receipts.Commands.UpdateReceiptById;
@@ -18,7 +20,7 @@ public class ReceiptController : ApiController
     }
 
     [HttpGet("{id}")]
-    public async Task<ApiResponse<ReceiptDocument>> GetReceiptById([FromRoute] int id)
+    public async Task<ApiResponse<ReceiptDocumentResponse>> GetReceiptById([FromRoute] int id)
     {
         var query = new GetReceiptByIdQry
         {
@@ -29,7 +31,7 @@ public class ReceiptController : ApiController
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<ReceiptDocument>>> GetReceiptAll([FromQuery] GetReceiptAllRequest body)
+    public async Task<ApiResponse<List<ReceiptDocumentResponse>>> GetReceiptAll([FromQuery] GetReceiptAllRequest body)
     {
         var query = new GetReceiptAllQry
         {

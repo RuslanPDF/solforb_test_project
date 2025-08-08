@@ -1,17 +1,18 @@
-﻿using Application.Common.Persistence;
+﻿using Application.Common.DTOs.Response;
+using Application.Common.DTOs.Response.Receipt;
+using Application.Common.Persistence;
 using AutoMapper;
-using Domain.Entities;
 using MediatR;
 
 namespace Application.Receipts.Queries.GetReceiptById;
 
-public class GetReceiptByIdHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<GetReceiptByIdQry, ReceiptDocument>
+public class GetReceiptByIdHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<GetReceiptByIdQry, ReceiptDocumentResponse>
 {
     private readonly IReceiptRepository _receiptRepository = _unitOfWork.GetRepository<IReceiptRepository>();
 
-    public async Task<ReceiptDocument> Handle(GetReceiptByIdQry request, CancellationToken cancellationToken)
+    public async Task<ReceiptDocumentResponse> Handle(GetReceiptByIdQry request, CancellationToken cancellationToken)
     {
         var receipt = await _receiptRepository.GetByIdAsync(request.Id);
-        return receipt;
+        return _mapper.Map<ReceiptDocumentResponse>(receipt);
     }
 }

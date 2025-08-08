@@ -1,9 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Common.DTOs.Response;
+using Application.Common.DTOs.Response.Receipt;
 using MediatR;
 
 namespace Application.Receipts.Queries.GetReceiptById;
 
-public record GetReceiptByIdQry : IRequest<ReceiptDocument>
+public record GetReceiptByIdQry : IRequest<ReceiptDocumentResponse>
 {
     public int Id { get; init; }
 }

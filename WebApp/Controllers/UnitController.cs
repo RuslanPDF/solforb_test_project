@@ -1,4 +1,5 @@
 ﻿using Application.Common.DTOs.Request.Units;
+using Application.Common.DTOs.Response.Unit;
 using Application.Units.Commands.CreateNewUnit;
 using Application.Units.Commands.DeleteUnitById;
 using Application.Units.Commands.UpdateUnitById;
@@ -18,15 +19,18 @@ public class UnitController : ApiController
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<UnitOfMeasurement>>> GetUnitAll()
+    public async Task<ApiResponse<List<UnitResponse>>> GetUnitAll([FromQuery] string status)
     {
-        var query = new GetUnitAllQry();
+        var query = new GetUnitAllQry
+        {
+            Status = status
+        };
         var result = await Mediator.Send(query);
         return FormatResponse(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<ApiResponse<UnitOfMeasurement>> GetUnitById([FromRoute] int id)
+    public async Task<ApiResponse<UnitResponse>> GetUnitById([FromRoute] int id)
     {
         var query = new GetUnitByIdQry
         {

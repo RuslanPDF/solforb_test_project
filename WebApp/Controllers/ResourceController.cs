@@ -1,4 +1,5 @@
 ﻿using Application.Common.DTOs.Request.Resources;
+using Application.Common.DTOs.Response.Resource;
 using Application.Resources.Commands.CreateNewResource;
 using Application.Resources.Commands.DeleteResourceById;
 using Application.Resources.Commands.UpdateResourceById;
@@ -18,15 +19,18 @@ public class ResourceController : ApiController
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Resource>>> GetResourceAll()
+    public async Task<ApiResponse<List<ResourceResponse>>> GetResourceAll([FromQuery] string status)
     {
-        var query = new GetResourceAllQry();
+        var query = new GetResourceAllQry
+        {
+            Status = status
+        };
         var results = await Mediator.Send(query);
         return FormatResponse(results);
     }
 
     [HttpGet("{id}")]
-    public async Task<ApiResponse<Resource>> GetResourceById([FromRoute] int id)
+    public async Task<ApiResponse<ResourceResponse>> GetResourceById([FromRoute] int id)
     {
         var query = new GetResourceByIdQry { Id = id };
         var results = await Mediator.Send(query);
