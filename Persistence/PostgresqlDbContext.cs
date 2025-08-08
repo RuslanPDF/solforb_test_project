@@ -4,7 +4,9 @@ namespace Persistence;
 
 public class PostgresqlDbContext : DbContext
 {
-    public PostgresqlDbContext(DbContextOptions<PostgresqlDbContext> opt) : base(opt) { }
+    public PostgresqlDbContext(DbContextOptions<PostgresqlDbContext> opt) : base(opt)
+    {
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -9,9 +9,7 @@ public class DeleteResourceByIdHandler(IUnitOfWork _unitOfWork) : IRequestHandle
 
     public async Task Handle(DeleteResourceByIdCmd request, CancellationToken cancellationToken)
     {
-        var resource = await _resourceRepository.GetByIdAsync(request.Id);
-
-        _resourceRepository.Remove(resource);
+        _resourceRepository.RemoveById(request.Id);
         await _unitOfWork.CommitAsync(cancellationToken);
     }
 }

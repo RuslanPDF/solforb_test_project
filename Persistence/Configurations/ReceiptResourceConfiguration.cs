@@ -29,7 +29,7 @@ public class ReceiptResourceConfiguration : BaseEntityTypeConfiguration<ReceiptR
             .IsRequired()
             .HasColumnType("decimal(18, 3)");
 
-        builder.HasIndex(rr => new { rr.ReceiptDocumentId, rr.ResourceId, rr.UnitOfMeasurementId })
-            .IsUnique(false);
+        builder.HasIndex(rr => new { rr.ReceiptDocumentId, rr.ResourceId })
+            .IsUnique();
     }
 }

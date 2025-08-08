@@ -9,9 +9,7 @@ public class DeleteUnitByIdHandler(IUnitOfWork _unitOfWork) : IRequestHandler<De
 
     public async Task Handle(DeleteUnitByIdCmd request, CancellationToken cancellationToken)
     {
-        var unit = await _unitRepository.GetByIdAsync(request.Id);
-
-        _unitRepository.Remove(unit);
+        _unitRepository.RemoveById(request.Id);
         await _unitOfWork.CommitAsync(cancellationToken);
     }
 }
