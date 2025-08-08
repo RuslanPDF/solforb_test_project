@@ -27,7 +27,7 @@ public class ResourceItemRequestValidator : AbstractValidator<ResourceItemReques
     public ResourceItemRequestValidator()
     {
         RuleFor(x => x.ResourceId).GreaterThan(0);
-        RuleFor(x => x.UnitId).GreaterThan(0);
+        RuleFor(x => x.UnitOfMeasurementId).GreaterThan(0);
         RuleFor(x => x.Quantity).GreaterThan(0);
     }
 }

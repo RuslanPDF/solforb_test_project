@@ -17,7 +17,7 @@ public class CreateNewReceiptHandler(IUnitOfWork _unitOfWork) : IRequestHandler<
             ReceiptResources = request.Items.Select(item => new ReceiptResource
             {
                 ResourceId = item.ResourceId,
-                UnitOfMeasurementId = item.UnitId,
+                UnitOfMeasurementId = item.UnitOfMeasurementId,
                 Quantity = item.Quantity,
             }).ToList()
         };

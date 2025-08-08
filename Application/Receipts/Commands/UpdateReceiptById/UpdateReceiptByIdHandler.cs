@@ -21,7 +21,7 @@ public class UpdateReceiptByIdHandler(IUnitOfWork _unitOfWork) : IRequestHandler
             if (existing != null)
             {
                 existing.Quantity = item.Quantity;
-                existing.UnitOfMeasurementId = item.UnitId;
+                existing.UnitOfMeasurementId = item.UnitOfMeasurementId;
                 existing.ResourceId = item.ResourceId;
             }
             else
@@ -29,11 +29,13 @@ public class UpdateReceiptByIdHandler(IUnitOfWork _unitOfWork) : IRequestHandler
                 receipt.ReceiptResources.Add(new ReceiptResource
                 {
                     ResourceId = item.ResourceId,
-                    UnitOfMeasurementId = item.UnitId,
+                    UnitOfMeasurementId = item.UnitOfMeasurementId,
                     Quantity = item.Quantity,
                     ReceiptDocumentId = receipt.Id,
                 });
             }
         }
+
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 }

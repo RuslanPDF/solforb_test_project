@@ -1,5 +1,4 @@
-﻿using Application.Common.DTOs.Response;
-using Application.Common.DTOs.Response.Receipt;
+﻿using Application.Common.DTOs.Response.Receipt;
 using Application.Common.Persistence;
 using AutoMapper;
 using MediatR;
