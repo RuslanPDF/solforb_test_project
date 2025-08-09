@@ -15,10 +15,26 @@ public class UpdateReceiptByIdHandler(IUnitOfWork _unitOfWork) : IRequestHandler
         receipt.Number = request.Number;
         receipt.Date = request.Date;
 
+        var incomingIds = request.Items
+            .Where(i => i.Id != null && i.Id != 0)
+            .Select(i => i.Id)
+            .ToList();
+
+        var rowsToDelete = receipt.ReceiptResources
+            .Where(rr => !incomingIds.Contains(rr.Id))
+            .ToList();
+
+        foreach (var row in rowsToDelete)
+        {
+            receipt.ReceiptResources.Remove(row);
+        }
+
+        Console.WriteLine(request.Items.Count);
+        
         foreach (var item in request.Items)
         {
             var existing = receipt.ReceiptResources.FirstOrDefault(rr => rr.Id == item.Id);
-            if (existing != null)
+            if (existing != null && existing.Id != 0)
             {
                 existing.Quantity = item.Quantity;
                 existing.UnitOfMeasurementId = item.UnitOfMeasurementId;
